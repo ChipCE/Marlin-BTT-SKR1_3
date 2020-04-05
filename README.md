@@ -1,5 +1,26 @@
 # Marlin 3D Printer Firmware
 
+## CAUTION
+ This firmware is not tested.
+
+## TO=DO
+- Endstop logic flip
+- Mk3 default PiD
+- ENDSTOP_INTERRUPTS_FEATURE
+- Z_MIN_PROBE_USES_Z_MIN_ENDSTOP_PIN
+- Z_AFTER_PROBING
+- PROBING_STEPPERS_OFF
+- LCD_BED_LEVELING
+- DISABLE_INACTIVE_Z
+- SDCARD_SORT_ALPHA
+- LIN_ADVANCE_K
+- HYBRID_THRESHOLD
+- CUSTOM_USER_MENUS
+- CANCEL_OBJECTS
+
+## Marlin 3D Printer Firmware
+
+
 ![GitHub](https://img.shields.io/github/license/marlinfirmware/marlin.svg)
 ![GitHub contributors](https://img.shields.io/github/contributors/marlinfirmware/marlin.svg)
 ![GitHub Release Date](https://img.shields.io/github/release-date/marlinfirmware/marlin.svg)
