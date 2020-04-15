@@ -1765,7 +1765,7 @@
 // enter the serial receive buffer, so they cannot be blocked.
 // Currently handles M108, M112, M410
 // Does not work on boards using AT90USB (USBCON) processors!
-//#define EMERGENCY_PARSER
+#define EMERGENCY_PARSER
 
 // Bad Serial-connections can miss a received command by sending an 'ok'
 // Therefore some clients abort after 30 seconds in a timeout.
@@ -2767,7 +2767,6 @@
  * Disable all Volumetric extrusion options
  */
 //#define NO_VOLUMETRICS
-
 #if DISABLED(NO_VOLUMETRICS)
   /**
    * Volumetric extrusion default state
@@ -2847,18 +2846,81 @@
  */
 #define CUSTOM_USER_MENUS
 #if ENABLED(CUSTOM_USER_MENUS)
-  //#define CUSTOM_USER_MENU_TITLE "Custom Commands"
+  #define CUSTOM_USER_MENU_TITLE "Custom Commands"
   #define USER_SCRIPT_DONE "M117 User Script Done"
   #define USER_SCRIPT_AUDIBLE_FEEDBACK
-  //#define USER_SCRIPT_RETURN  // Return to status screen after a script
+  #define USER_SCRIPT_RETURN  // Return to status screen after a script
+
+  /* GCODE
+    M117 [string] - Set LCD Message 
+    G0 [E<pos>] [F<rate>] [X<pos>] [Y<pos>] [Z<pos>] Linear Move 
+        F : mm/min
+    M140 [S<temp>] Set Bed Temperature 
+    M190  [R<temp>] [S<temp>] Wait for Bed Temperature 
+        [R<temp>] Target temperature (wait for cooling or heating).
+        [S<temp>] Target temperature (wait only when heating)
+    M104 [B<temp>] [F<flag>] [S<temp>] [T<index>] Set Hotend Temperature (non blocking)
+        [T<index>] Hotend index. 
+        [S<temp>] Target temperature.
+    M109 [B<temp>] [F<flag>] [R<temp>] [S<temp>] [T<index>] Wait for Hotend Temperature
+        [R<temp>] Target temperature (wait for cooling or heating).
+        [S<temp>] Target temperature (wait only when heating)
+    M108 Break and Continue
+    M112 Emergency Stop
+    G92 [E<pos>] [X<pos>] [Y<pos>] [Z<pos>] Set Position 
+    G21 Millimeter Units 
+    M82 E Absolute
+    M83 E Relative
+    G90 Absolute Positioning 
+    G91 Relative Positioning 
+    M300 [P<ms>] [S<Hz>] Play Tone
+    G4 [P<time in ms>] [S<time in sec>] Dwell pauses the command queue and waits for a period of time.
+    M0 [P<ms>] [S<sec>] [string]  pause after the last movement and wait for the user to continue.
+    G34 [A] [E] [I] [T] Z Steppers Auto-Alignment 
+    M18 [E<flag>] [S<seconds>] [X<flag>] [Y<flag>] [Z<flag>] Disable steppers
+    M914 [I<index>] [X<int>] [Y<int>] [Z<int>] TMC Bump Sensitivity 0~255(TMC2209) -64~63(Other driver)
+        [I<index>] Index for dual steppers. Use I1 for X2, Y2, and/or Z2.
+    M43 T [I<bool>] [L<pin>] [R<count>] [S<pin>] [W<time>] Toggle Pins
+        [L<pin>] End Pin number. If not given, will default to last pin defined for this board
+        [S<pin>] Start Pin number. If not given, will default to 0
+        [R<count>] Repeat pulses on each pin this number of times before continuing to next pin. If not given will default to 1.
+        [W<time>] Wait time (in milliseconds) transitions. If not given will default to 500.
+    M42 [I<bool>] [M<0|1|2|3>] [P<pin>] S<state> 
+        M: Set the pin mode.
+          M0: INPUT
+          M1: OUTPUT
+          M2: INPUT_PULLUP
+          M3: INPUT_PULLDOWN
+        [P<pin>] A digital pin number (even for analog pins) to write to. (LED_PIN if omitted)
+        S<state> The state to set. PWM pins may be set from 0-255.
+    M997 - Firmware update 
+        Can be used to trigger a firmware update from the SD card after the firmware binary has been uploaded remotely.
+    M106 [P<index>] [S<speed> 0~255] [T<secondary>] Set Fan Speed 
+        Turn on one of the fans and set its speed. If no fan index is given, the print cooling fan is selected. The fan speed applies to the next block added to the planner, so it will not take effect until previous moves in the planner are done. Under manual control with an idle machine, M106 will change the fan speed immediately.
+    M107 [P<index>] Fan Off
+        Turn off one of the fans. If no fan index is given, the print cooling fan.
+    M871 [B<I|V>] [E<I|V>] [P<I|V>] [R] Probe temperature config 
+        [B<I|V>] Write bed temperature value [V] at index [I]
+        [E<I|V>] Write extruder temperature value [V] at index [I]
+        [P<I|V>] Write probe temperature value [V] at index [I]
+        [R] Reset values to factory default (zero)
+    G76 [B] [P] Probe temperature calibration
+        [B] Calibrate bed only
+        [P] Calibrate probe only
+    M105 - Report Temperatures
+    M155 [S<seconds>] It can be useful for host software to track temperatures, display and graph them over time, but polling with M105 is less than optimal. With M155 hosts simply set an interval and Marlin will keep sending data automatically. This method is preferred over polling with M105.
+    M999 - STOP Restart
+        S<bool> Resume without flushing the command buffer. The default behaviour is to flush the serial buffer and request a resend to the host starting on the last N line received.
+  */
+
 
   #define USER_DESC_1 "Home & UBL Info"
   #define USER_GCODE_1 "G28\nG29 W"
 
-  #define USER_DESC_2 "Preheat for " PREHEAT_1_LABEL
+  #define USER_DESC_2 "Cold maintenance"
   #define USER_GCODE_2 "M140 S" STRINGIFY(PREHEAT_1_TEMP_BED) "\nM104 S" STRINGIFY(PREHEAT_1_TEMP_HOTEND)
 
-  #define USER_DESC_3 "Preheat for " PREHEAT_2_LABEL
+  #define USER_DESC_3 "Hot maintenance"
   #define USER_GCODE_3 "M140 S" STRINGIFY(PREHEAT_2_TEMP_BED) "\nM104 S" STRINGIFY(PREHEAT_2_TEMP_HOTEND)
 
   #define USER_DESC_4 "Heat Bed/Home/Level"
@@ -2866,6 +2928,15 @@
 
   #define USER_DESC_5 "Home & Info"
   #define USER_GCODE_5 "G28\nM503"
+
+  #define USER_DESC_6 "Print Mesh Validation"
+  #define USER_GCODE_6 "G28\nG29\nG26\nG28"
+
+  #define USER_DESC_7 "Auto Cold Pull"
+  #define USER_GCODE_7 "G28\nM83\nG92 E0.00\nG21\nG1 X125 Y105 Z50\nM109 S250\nG1 E10.00 F6.5\nM109 S95\nM18 E\nM0 Pull your filament out\nM106 S0\nM109 S0"
+
+  #define USER_DESC_8 "Nozzle Change"
+  #define USER_GCODE_8 "M104 S275\nM117 Setting Nozzle to 275C\nG4 s3\nM0 Click to continue"
 #endif
 
 /**
