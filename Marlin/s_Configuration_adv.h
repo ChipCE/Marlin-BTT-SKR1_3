@@ -420,7 +420,7 @@
  * Multiple extruders can be assigned to the same pin in which case
  * the fan will turn on when any selected extruder is above the threshold.
  */
-#define E0_AUTO_FAN_PIN FAN1_PIN // P2_04
+#define E0_AUTO_FAN_PIN P2_04
 #define E1_AUTO_FAN_PIN -1
 #define E2_AUTO_FAN_PIN -1
 #define E3_AUTO_FAN_PIN -1
@@ -591,9 +591,9 @@
 // @section homing
 
 // Homing hits each endstop, retracts by these distances, then does a slower bump.
-#define X_HOME_BUMP_MM 3
-#define Y_HOME_BUMP_MM 3
-#define Z_HOME_BUMP_MM 2
+#define X_HOME_BUMP_MM 0
+#define Y_HOME_BUMP_MM 0
+#define Z_HOME_BUMP_MM 0
 #define HOMING_BUMP_DIVISOR { 2, 2, 4 }  // Re-Bump Speed Divisor (Divides the Homing Feedrate)
 //#define QUICK_HOME                     // If homing includes X and Y, do a diagonal move initially
 #define HOMING_BACKOFF_MM { 2, 2, 2 }  // (mm) Move away from the endstops after homing
@@ -680,7 +680,7 @@
   // Define probe X and Y positions for Z1, Z2 [, Z3 [, Z4]]
   // If not defined, probe limits will be used.
   // Override with 'M422 S<index> X<pos> Y<pos>'
-  #define Z_STEPPER_ALIGN_XY { {  17, 105 }, { 233,  105 } }
+  #define Z_STEPPER_ALIGN_XY { {  35, 105 }, { 235,  105 } }
 
   /**
    * Orientation for the automatically-calculated probe positions.
@@ -703,7 +703,7 @@
    *
    */
   #ifndef Z_STEPPER_ALIGN_XY
-    #define Z_STEPPERS_ORIENTATION 0
+    //#define Z_STEPPERS_ORIENTATION 0
   #endif
 
   // Provide Z stepper positions for more rapid convergence in bed alignment.
@@ -749,7 +749,7 @@
 #define DEFAULT_STEPPER_DEACTIVE_TIME 120
 #define DISABLE_INACTIVE_X true
 #define DISABLE_INACTIVE_Y true
-#define DISABLE_INACTIVE_Z true  // Set to false if the nozzle will fall down on your printed part when print has finished.
+#define DISABLE_INACTIVE_Z false  // Set to false if the nozzle will fall down on your printed part when print has finished.
 #define DISABLE_INACTIVE_E true
 
 #define DEFAULT_MINIMUMFEEDRATE       0.0     // minimum feedrate
@@ -883,7 +883,7 @@
 //#define MICROSTEP32 HIGH,LOW,HIGH
 
 // Microstep setting (Only functional when stepper driver microstep pins are connected to MCU.
-#define MICROSTEP_MODES { 16, 16, 16, 16, 16, 16}// [1,2,4,8,16]
+#define MICROSTEP_MODES { 16, 16, 16, 16, 16, 16 } // [1,2,4,8,16]
 
 /**
  *  @section  stepper motor current
@@ -939,7 +939,7 @@
 // @section lcd
 
 #if EITHER(ULTIPANEL, EXTENSIBLE_UI)
-  #define MANUAL_FEEDRATE { 50*60, 50*60, 4*60, 2*60 } // Feedrates for manual moves along X, Y, Z, E from panel
+  #define MANUAL_FEEDRATE { 50*60, 50*60, 4*60, 60 } // Feedrates for manual moves along X, Y, Z, E from panel
   #define SHORT_MANUAL_Z_MOVE 0.025 // (mm) Smallest manual Z move (< 0.1mm)
   #if ENABLED(ULTIPANEL)
     #define MANUAL_E_MOVES_RELATIVE // Display extruder move distance rather than "position"
@@ -981,11 +981,11 @@
     #define LED_COLOR_PRESETS                 // Enable the Preset Color menu option
     #if ENABLED(LED_COLOR_PRESETS)
       #define LED_USER_PRESET_RED        255  // User defined RED value
-      #define LED_USER_PRESET_GREEN      128  // User defined GREEN value
-      #define LED_USER_PRESET_BLUE         0  // User defined BLUE value
+      #define LED_USER_PRESET_GREEN        0  // User defined GREEN value
+      #define LED_USER_PRESET_BLUE       255  // User defined BLUE value
       #define LED_USER_PRESET_WHITE      255  // User defined WHITE value
       #define LED_USER_PRESET_BRIGHTNESS 255  // User defined intensity
-      //#define LED_USER_PRESET_STARTUP       // Have the printer display the user preset color on startup
+      #define LED_USER_PRESET_STARTUP       // Have the printer display the user preset color on startup
     #endif
   #endif
 
@@ -1037,7 +1037,7 @@
   //#define SD_DETECT_STATE HIGH
 
   #define SD_FINISHED_STEPPERRELEASE true          // Disable steppers when SD Print is finished
-  #define SD_FINISHED_RELEASECOMMAND "M84 X Y Z E" // You might want to keep the Z enabled so your bed stays in place.
+  #define SD_FINISHED_RELEASECOMMAND "M84 X Y E" // You might want to keep the Z enabled so your bed stays in place.
 
   // Reverse SD sort to show "more recent" files first, according to the card's FAT.
   // Since the FAT gets out of order with usage, SDCARD_SORT_ALPHA is recommended.
@@ -1047,7 +1047,7 @@
 
   //#define MENU_ADDAUTOSTART               // Add a menu option to run auto#.g files
 
-  #define EVENT_GCODE_SD_STOP "G28XY"       // G-code to run on Stop Print (e.g., "G28XY" or "G27")
+  #define EVENT_GCODE_SD_STOP "G27 P2\nM84 X Y E"       // G-code to run on Stop Print (e.g., "G28XY" or "G27")
 
   #if ENABLED(PRINTER_EVENT_LEDS)
     #define PE_LEDS_COMPLETED_TIME  (30*60) // (seconds) Time to keep the LED "done" color before restoring normal illumination
@@ -1119,7 +1119,7 @@
   #endif
 
   // This allows hosts to request long names for files and folders with M33
-  #define LONG_FILENAME_HOST_SUPPORT
+  //#define LONG_FILENAME_HOST_SUPPORT
 
   // Enable this option to scroll long filenames in the SD card menu
   #define SCROLL_LONG_FILENAMES
@@ -1479,12 +1479,12 @@
 
   #define DOUBLECLICK_FOR_Z_BABYSTEPPING  // Double-click on the Status Screen for Z Babystepping.
   #if ENABLED(DOUBLECLICK_FOR_Z_BABYSTEPPING)
-    #define DOUBLECLICK_MAX_INTERVAL 1250   // Maximum interval between clicks, in milliseconds.
+    #define DOUBLECLICK_MAX_INTERVAL 800   // Maximum interval between clicks, in milliseconds.
                                             // Note: Extra time may be added to mitigate controller latency.
     //#define BABYSTEP_ALWAYS_AVAILABLE     // Allow babystepping at all times (not just during movement).
-    //#define MOVE_Z_WHEN_IDLE              // Jump to the move Z menu on doubleclick when printer is idle.
+    #define MOVE_Z_WHEN_IDLE              // Jump to the move Z menu on doubleclick when printer is idle.
     #if ENABLED(MOVE_Z_WHEN_IDLE)
-      #define MOVE_Z_IDLE_MULTIPLICATOR 1   // Multiply 1mm by this factor for the move step size.
+      #define MOVE_Z_IDLE_MULTIPLICATOR 10   // Multiply 1mm by this factor for the move step size.
     #endif
   #endif
 
@@ -1518,7 +1518,7 @@
 #define LIN_ADVANCE
 #if ENABLED(LIN_ADVANCE)
   //#define EXTRA_LIN_ADVANCE_K // Enable for second linear advance constants
-  #define LIN_ADVANCE_K 0.1    // Unit: mm compression per 1mm/s extruder speed
+  #define LIN_ADVANCE_K 0.00    // Unit: mm compression per 1mm/s extruder speed
   //#define LA_DEBUG            // If enabled, this will generate debug information output over USB.
 #endif
 
@@ -1555,10 +1555,10 @@
  * the probe to be unable to reach any points.
  */
 #if PROBE_SELECTED && !IS_KINEMATIC
-  #define MIN_PROBE_EDGE_LEFT 17 //MIN_PROBE_EDGE
-  #define MIN_PROBE_EDGE_RIGHT 17 //MIN_PROBE_EDGE
-  #define MIN_PROBE_EDGE_FRONT 20 //MIN_PROBE_EDGE
-  #define MIN_PROBE_EDGE_BACK 33 //MIN_PROBE_EDGE
+  //#define MIN_PROBE_EDGE_LEFT MIN_PROBE_EDGE
+  //#define MIN_PROBE_EDGE_RIGHT MIN_PROBE_EDGE
+  //#define MIN_PROBE_EDGE_FRONT MIN_PROBE_EDGE
+  //#define MIN_PROBE_EDGE_BACK MIN_PROBE_EDGE
 #endif
 
 #if EITHER(MESH_BED_LEVELING, AUTO_BED_LEVELING_UBL)
@@ -1765,7 +1765,7 @@
 // enter the serial receive buffer, so they cannot be blocked.
 // Currently handles M108, M112, M410
 // Does not work on boards using AT90USB (USBCON) processors!
-#define EMERGENCY_PARSER
+//#define EMERGENCY_PARSER
 
 // Bad Serial-connections can miss a received command by sending an 'ok'
 // Therefore some clients abort after 30 seconds in a timeout.
@@ -1879,12 +1879,12 @@
                                                   //   For Bowden, the full length of the tube and nozzle.
                                                   //   For direct drive, the full length of the nozzle.
                                                   //   Set to 0 for manual unloading.
-  #define FILAMENT_CHANGE_SLOW_LOAD_FEEDRATE   6  // (mm/s) Slow move when starting load.
-  #define FILAMENT_CHANGE_SLOW_LOAD_LENGTH     40  // (mm) Slow length, to allow time to insert material.
+  #define FILAMENT_CHANGE_SLOW_LOAD_FEEDRATE   2  // (mm/s) Slow move when starting load.
+  #define FILAMENT_CHANGE_SLOW_LOAD_LENGTH     40 // (mm) Slow length, to allow time to insert material.
                                                   // 0 to disable start loading and skip to fast load only
   #define FILAMENT_CHANGE_FAST_LOAD_FEEDRATE   6  // (mm/s) Load filament feedrate. This can be pretty fast.
   #define FILAMENT_CHANGE_FAST_LOAD_ACCEL     25  // (mm/s^2) Lower acceleration may allow a faster feedrate.
-  #define FILAMENT_CHANGE_FAST_LOAD_LENGTH     60  // (mm) Load length of filament, from extruder gear to nozzle.
+  #define FILAMENT_CHANGE_FAST_LOAD_LENGTH     60 // (mm) Load length of filament, from extruder gear to nozzle.
                                                   //   For Bowden, the full length of the tube and nozzle.
                                                   //   For direct drive, the full length of the nozzle.
   //#define ADVANCED_PAUSE_CONTINUOUS_PURGE       // Purge continuously up to the purge length until interrupted.
@@ -1897,7 +1897,7 @@
   //#define ADVANCED_PAUSE_FANS_PAUSE             // Turn off print-cooling fans while the machine is paused.
 
                                                   // Filament Unload does a Retract, Delay, and Purge first:
-  #define FILAMENT_UNLOAD_PURGE_RETRACT       5  // (mm) Unload initial retract length.
+  #define FILAMENT_UNLOAD_PURGE_RETRACT       5   // (mm) Unload initial retract length.
   #define FILAMENT_UNLOAD_PURGE_DELAY       5000  // (ms) Delay for the filament to cool after retract.
   #define FILAMENT_UNLOAD_PURGE_LENGTH         8  // (mm) An unretract is done, then this length is purged.
   #define FILAMENT_UNLOAD_PURGE_FEEDRATE      25  // (mm/s) feedrate to purge before unload
@@ -1907,7 +1907,7 @@
   #define PAUSE_PARK_NO_STEPPER_TIMEOUT           // Enable for XYZ steppers to stay powered on during filament change.
 
   #define PARK_HEAD_ON_PAUSE                    // Park the nozzle during pause and filament change.
-  //#define HOME_BEFORE_FILAMENT_CHANGE           // Ensure homing has been completed prior to parking for filament change
+  //#define HOME_BEFORE_FILAMENT_CHANGE         // Ensure homing has been completed prior to parking for filament change
 
   #define FILAMENT_LOAD_UNLOAD_GCODES           // Add M701/M702 Load/Unload G-codes, plus Load/Unload in the LCD Prepare menu.
   //#define FILAMENT_UNLOAD_ALL_EXTRUDERS         // Allow M702 to unload all extruders above a minimum target temp (as set by M302)
@@ -2045,9 +2045,9 @@
   #define INTERPOLATE       true  // Interpolate X/Y/Z_MICROSTEPS to 256
 
   #if AXIS_IS_TMC(X)
-    #define X_CURRENT       500        // (mA) RMS current. Multiply by 1.414 for peak current.
-    #define X_CURRENT_HOME  X_CURRENT  // (mA) RMS current for sensorless homing
-    #define X_MICROSTEPS     16    // 0..256
+    #define X_CURRENT        500  // (mA) RMS current. Multiply by 1.414 for peak current.
+    #define X_CURRENT_HOME   200  // (mA) RMS current for sensorless homing
+    #define X_MICROSTEPS     16   // 0..256
     #define X_RSENSE          0.11
     #define X_CHAIN_POS      -1    // <=0 : Not chained. 1 : MCU MOSI connected. 2 : Next in chain, ...
   #endif
@@ -2061,8 +2061,8 @@
   #endif
 
   #if AXIS_IS_TMC(Y)
-    #define Y_CURRENT       600
-    #define Y_CURRENT_HOME  Y_CURRENT
+    #define Y_CURRENT        600
+    #define Y_CURRENT_HOME   300
     #define Y_MICROSTEPS     16
     #define Y_RSENSE          0.11
     #define Y_CHAIN_POS      -1
@@ -2079,7 +2079,7 @@
   #if AXIS_IS_TMC(Z)
     #define Z_CURRENT       450
     #define Z_CURRENT_HOME  Z_CURRENT
-    #define Z_MICROSTEPS     8
+    #define Z_MICROSTEPS     16
     #define Z_RSENSE          0.11
     #define Z_CHAIN_POS      -1
   #endif
@@ -2087,7 +2087,7 @@
   #if AXIS_IS_TMC(Z2)
     #define Z2_CURRENT      450
     #define Z2_CURRENT_HOME Z2_CURRENT
-    #define Z2_MICROSTEPS    8
+    #define Z2_MICROSTEPS    16
     #define Z2_RSENSE         0.11
     #define Z2_CHAIN_POS     -1
   #endif
@@ -2109,8 +2109,8 @@
   #endif
 
   #if AXIS_IS_TMC(E0)
-    #define E0_CURRENT      600
-    #define E0_MICROSTEPS    16
+    #define E0_CURRENT      550
+    #define E0_MICROSTEPS    32
     #define E0_RSENSE         0.11
     #define E0_CHAIN_POS     -1
   #endif
@@ -2267,7 +2267,7 @@
    * M912 - Clear stepper driver overtemperature pre-warn condition flag.
    * M122 - Report driver parameters (Requires TMC_DEBUG)
    */
-  #define MONITOR_DRIVER_STATUS
+  //#define MONITOR_DRIVER_STATUS
 
   #if ENABLED(MONITOR_DRIVER_STATUS)
     #define CURRENT_STEP_DOWN     50  // [mA]
@@ -2284,12 +2284,12 @@
    */
   //#define HYBRID_THRESHOLD
 
-  #define X_HYBRID_THRESHOLD     100  // [mm/s]
+  #define X_HYBRID_THRESHOLD     120  // [mm/s]
   #define X2_HYBRID_THRESHOLD    100
-  #define Y_HYBRID_THRESHOLD     100
+  #define Y_HYBRID_THRESHOLD     120
   #define Y2_HYBRID_THRESHOLD    100
-  #define Z_HYBRID_THRESHOLD       3
-  #define Z2_HYBRID_THRESHOLD      3
+  #define Z_HYBRID_THRESHOLD     100
+  #define Z2_HYBRID_THRESHOLD    100
   #define Z3_HYBRID_THRESHOLD      3
   #define Z4_HYBRID_THRESHOLD      3
   #define E0_HYBRID_THRESHOLD     30
@@ -2324,23 +2324,23 @@
    * IMPROVE_HOMING_RELIABILITY tunes acceleration and jerk when
    * homing and adds a guard period for endstop triggering.
    */
-  //#define SENSORLESS_HOMING // StallGuard capable drivers only
+  #define SENSORLESS_HOMING // StallGuard capable drivers only
 
   #if EITHER(SENSORLESS_HOMING, SENSORLESS_PROBING)
     // TMC2209: 0...255. TMC2130: -64...63
-    #define X_STALL_SENSITIVITY  8
+    #define X_STALL_SENSITIVITY  90
     #define X2_STALL_SENSITIVITY X_STALL_SENSITIVITY
-    #define Y_STALL_SENSITIVITY  8
+    #define Y_STALL_SENSITIVITY  100
     //#define Z_STALL_SENSITIVITY  8
     //#define SPI_ENDSTOPS              // TMC2130 only
-    //#define IMPROVE_HOMING_RELIABILITY
+    #define IMPROVE_HOMING_RELIABILITY
   #endif
 
   /**
    * Beta feature!
    * Create a 50/50 square wave step pulse optimal for stepper drivers.
    */
-  #define SQUARE_WAVE_STEPPING
+  //#define SQUARE_WAVE_STEPPING
 
   /**
    * Enable M122 debugging command for TMC stepper drivers.
@@ -2767,6 +2767,7 @@
  * Disable all Volumetric extrusion options
  */
 //#define NO_VOLUMETRICS
+
 #if DISABLED(NO_VOLUMETRICS)
   /**
    * Volumetric extrusion default state
@@ -2827,7 +2828,7 @@
  *
  * Execute certain G-code commands immediately after power-on.
  */
-//#define STARTUP_COMMANDS "M17 Z"
+#define STARTUP_COMMANDS "M17 Z"
 
 /**
  * G-code Macros
@@ -2846,97 +2847,61 @@
  */
 #define CUSTOM_USER_MENUS
 #if ENABLED(CUSTOM_USER_MENUS)
-  #define CUSTOM_USER_MENU_TITLE "Custom Commands"
-  #define USER_SCRIPT_DONE "M117 User Script Done"
-  #define USER_SCRIPT_AUDIBLE_FEEDBACK
+  //#define CUSTOM_USER_MENU_TITLE "Custom Commands"
+  #define USER_SCRIPT_DONE "M117 Completed"
+  //#define USER_SCRIPT_AUDIBLE_FEEDBACK
   #define USER_SCRIPT_RETURN  // Return to status screen after a script
 
-  /* GCODE
-    M117 [string] - Set LCD Message 
-    G0 [E<pos>] [F<rate>] [X<pos>] [Y<pos>] [Z<pos>] Linear Move 
-        F : mm/min
-    M140 [S<temp>] Set Bed Temperature 
-    M190  [R<temp>] [S<temp>] Wait for Bed Temperature 
-        [R<temp>] Target temperature (wait for cooling or heating).
-        [S<temp>] Target temperature (wait only when heating)
-    M104 [B<temp>] [F<flag>] [S<temp>] [T<index>] Set Hotend Temperature (non blocking)
-        [T<index>] Hotend index. 
-        [S<temp>] Target temperature.
-    M109 [B<temp>] [F<flag>] [R<temp>] [S<temp>] [T<index>] Wait for Hotend Temperature
-        [R<temp>] Target temperature (wait for cooling or heating).
-        [S<temp>] Target temperature (wait only when heating)
-    M108 Break and Continue
-    M112 Emergency Stop
-    G92 [E<pos>] [X<pos>] [Y<pos>] [Z<pos>] Set Position 
-    G21 Millimeter Units 
-    M82 E Absolute
-    M83 E Relative
-    G90 Absolute Positioning 
-    G91 Relative Positioning 
-    M300 [P<ms>] [S<Hz>] Play Tone
-    G4 [P<time in ms>] [S<time in sec>] Dwell pauses the command queue and waits for a period of time.
-    M0 [P<ms>] [S<sec>] [string]  pause after the last movement and wait for the user to continue.
-    G34 [A] [E] [I] [T] Z Steppers Auto-Alignment 
-    M18 [E<flag>] [S<seconds>] [X<flag>] [Y<flag>] [Z<flag>] Disable steppers
-    M914 [I<index>] [X<int>] [Y<int>] [Z<int>] TMC Bump Sensitivity 0~255(TMC2209) -64~63(Other driver)
-        [I<index>] Index for dual steppers. Use I1 for X2, Y2, and/or Z2.
-    M43 T [I<bool>] [L<pin>] [R<count>] [S<pin>] [W<time>] Toggle Pins
-        [L<pin>] End Pin number. If not given, will default to last pin defined for this board
-        [S<pin>] Start Pin number. If not given, will default to 0
-        [R<count>] Repeat pulses on each pin this number of times before continuing to next pin. If not given will default to 1.
-        [W<time>] Wait time (in milliseconds) transitions. If not given will default to 500.
-    M42 [I<bool>] [M<0|1|2|3>] [P<pin>] S<state> 
-        M: Set the pin mode.
-          M0: INPUT
-          M1: OUTPUT
-          M2: INPUT_PULLUP
-          M3: INPUT_PULLDOWN
-        [P<pin>] A digital pin number (even for analog pins) to write to. (LED_PIN if omitted)
-        S<state> The state to set. PWM pins may be set from 0-255.
-    M997 - Firmware update 
-        Can be used to trigger a firmware update from the SD card after the firmware binary has been uploaded remotely.
-    M106 [P<index>] [S<speed> 0~255] [T<secondary>] Set Fan Speed 
-        Turn on one of the fans and set its speed. If no fan index is given, the print cooling fan is selected. The fan speed applies to the next block added to the planner, so it will not take effect until previous moves in the planner are done. Under manual control with an idle machine, M106 will change the fan speed immediately.
-    M107 [P<index>] Fan Off
-        Turn off one of the fans. If no fan index is given, the print cooling fan.
-    M871 [B<I|V>] [E<I|V>] [P<I|V>] [R] Probe temperature config 
-        [B<I|V>] Write bed temperature value [V] at index [I]
-        [E<I|V>] Write extruder temperature value [V] at index [I]
-        [P<I|V>] Write probe temperature value [V] at index [I]
-        [R] Reset values to factory default (zero)
-    G76 [B] [P] Probe temperature calibration
-        [B] Calibrate bed only
-        [P] Calibrate probe only
-    M105 - Report Temperatures
-    M155 [S<seconds>] It can be useful for host software to track temperatures, display and graph them over time, but polling with M105 is less than optimal. With M155 hosts simply set an interval and Marlin will keep sending data automatically. This method is preferred over polling with M105.
-    M999 - STOP Restart
-        S<bool> Resume without flushing the command buffer. The default behaviour is to flush the serial buffer and request a resend to the host starting on the last N line received.
-  */
+  #define USER_DESC_1 "Nozzle Change"
+  #define USER_GCODE_1 "G28\nG1 X125 Y105 Z140 F2000\nM104 S275\nM117 Setting Nozzle to 275C\nG4 s10\nM0 Click when Finished\nM104 S0"
 
+  #define USER_DESC_2 "Full Calibration" 
+  #define USER_GCODE_2 "M140 S60\nM190 S60\nG28\nG34\nG29\nM500\nM140 S0\nG28"
 
-  #define USER_DESC_1 "Home & UBL Info"
-  #define USER_GCODE_1 "G28\nG29 W"
+  #define USER_DESC_3 "PLA Z Calibration"
+  #define USER_GCODE_3 "G28\nM107\nG29 L1\nG29 J2\nG1 X2.0 Y-2.0 Z0.60 F3000\nM140 S60\nM104 S205\nM190 S60\nM109 S205\nM0 Click to continue\nG92 E0.00\nG1 Z0.2 X60 E9.0 F1000.0\nG1 X100.0 E12.5 F1000.0\nG92 E0.0\nG21\nG90\nM83\nG1 E-1.50000 F2100.00000\nG1 Z0.150 F7200.000\nM204 S1000\nG1 F4000\nG1 X50 Y155\nG1 F1080\nG1 X75 Y155 E2.5\nG1 X100 Y155 E2\nG1 X200 Y155 E2.62773\nG1 X200 Y135 E0.66174\nG1 X50 Y135 E3.62773\nG1 X50 Y115 E0.49386\nG1 X200 Y115 E3.62773\nG1 X200 Y95 E0.49386\nG1 X50 Y95 E3.62773\nG1 X50 Y75 E0.49386\nG1 X200 Y75 E3.62773\nG1 X200 Y55 E0.49386\nG1 X50 Y55 E3.62773\nG1 X50 Y35 E0.49386\nG1 X70 Y35 E0.49386\nG1 X70 Y34.6 E0\nG1 X50 Y34.6 E0.49386\nG1 X50 Y34.2 E0\nG1 X70 Y34.2 E0.49386\nG1 X70 Y33.8 E0\nG1 X50 Y33.8 E0.49386\nG1 X50 Y33.4 E0\nG1 X70 Y33.4 E0.49386\nG1 X70 Y33.0 E0\nG1 X50 Y33.0 E0.49386\nG1 X50 Y32.6 E0\nG1 X70 Y32.6 E0.49386\nG1 X70 Y32.2 E0\nG1 X50 Y32.2 E0.49386\nG1 X50 Y31.8 E0\nG1 X70 Y31.8 E0.49386\nG1 X70 Y31.4 E0\nG1 X50 Y31.4 E0.49386\nG1 X50 Y31.0 E0\nG1 X70 Y31.0 E0.49386\nG1 X70 Y30.6 E0\nG1 X50 Y30.6 E0.49386\nG1 X50 Y30.2 E0\nG1 X70 Y30.2 E0.49386\nG1 X70 Y29.8 E0\nG1 X50 Y29.8 E0.49386\nG1 X50 Y29.4 E0\nG1 X70 Y29.4 E0.49386\nG1 X70 Y29.0 E0\nG1 X50 Y29.0 E0.49386\nG1 X50 Y28.6 E0\nG1 X70 Y28.6 E0.49386\nG1 X70 Y28.2 E0\nG1 X50 Y28.2 E0.49386\nG1 X50 Y27.8 E0\nG1 X70 Y27.8 E0.49386\nG1 X70 Y27.4 E0\nG1 X50 Y27.4 E0.49386\nG1 X50 Y27.0 E0\nG1 X70 Y27.0 E0.49386\nG1 X70 Y26.6 E0\nG1 X50 Y26.6 E0.49386\nG1 X50 Y26.2 E0\nG1 X70 Y26.2 E0.49386\nG1 X70 Y25.8 E0\nG1 X50 Y25.8 E0.49386\nG1 X50 Y25.4 E0\nG1 X70 Y25.4 E0.49386\nG1 X70 Y25.0 E0\nG1 X50 Y25.0 E0.49386\nG1 X50 Y24.6 E0\nG1 X70 Y24.6 E0.49386\nG1 X70 Y24.2 E0\nG1 X50 Y24.2 E0.49386\nG1 X50 Y23.8 E0\nG1 X70 Y23.8 E0.49386\nG1 X70 Y23.4 E0\nG1 X50 Y23.4 E0.49386\nG1 X50 Y23.0 E0\nG1 X70 Y23.0 E0.49386\nG1 X70 Y22.6 E0\nG1 X50 Y22.6 E0.49386\nG1 X50 Y22.2 E0\nG1 X70 Y22.2 E0.49386\nG1 X70 Y21.8 E0\nG1 X50 Y21.8 E0.49386\nG1 X50 Y21.4 E0\nG1 X70 Y21.4 E0.49386\nG1 X70 Y21.0 E0\nG1 X50 Y21.0 E0.49386\nG1 X50 Y20.6 E0\nG1 X70 Y20.6 E0.49386\nG1 X70 Y20.2 E0\nG1 X50 Y20.2 E0.49386\nG1 X50 Y19.8 E0\nG1 X70 Y19.8 E0.49386\nG1 X70 Y19.4 E0\nG1 X50 Y19.4 E0.49386\nG1 E-0.07500 F2100.00000\nG4\nM107\nM104 S0\nM140 S0\nG1 X10 Y180 F4000\nG1 Z10 F1300.000\nM500\nM0 Happy Printing\nM84"
 
-  #define USER_DESC_2 "Cold maintenance"
-  #define USER_GCODE_2 "M140 S" STRINGIFY(PREHEAT_1_TEMP_BED) "\nM104 S" STRINGIFY(PREHEAT_1_TEMP_HOTEND)
+  #define USER_DESC_4 "PETG Z Calibration"
+  #define USER_GCODE_4 "G28\nM107\nG29 L1\nG29 J2\nG1 X2.0 Y-2.0 Z0.60 F3000\nM140 S80\nM104 S240\nM190 S80\nM109 S240\nM0 Click to continue\nG92 E0.00\nG1 Z0.2 X60 E9.0 F1000.0\nG1 X100.0 E12.5 F1000.0\nG92 E0.0\nG21\nG90\nM83\nG1 E-1.50000 F2100.00000\nG1 Z0.150 F7200.000\nM204 S1000\nG1 F4000\nG1 X50 Y155\nG1 F1080\nG1 X75 Y155 E2.5\nG1 X100 Y155 E2\nG1 X200 Y155 E2.62773\nG1 X200 Y135 E0.66174\nG1 X50 Y135 E3.62773\nG1 X50 Y115 E0.49386\nG1 X200 Y115 E3.62773\nG1 X200 Y95 E0.49386\nG1 X50 Y95 E3.62773\nG1 X50 Y75 E0.49386\nG1 X200 Y75 E3.62773\nG1 X200 Y55 E0.49386\nG1 X50 Y55 E3.62773\nG1 X50 Y35 E0.49386\nG1 X70 Y35 E0.49386\nG1 X70 Y34.6 E0\nG1 X50 Y34.6 E0.49386\nG1 X50 Y34.2 E0\nG1 X70 Y34.2 E0.49386\nG1 X70 Y33.8 E0\nG1 X50 Y33.8 E0.49386\nG1 X50 Y33.4 E0\nG1 X70 Y33.4 E0.49386\nG1 X70 Y33.0 E0\nG1 X50 Y33.0 E0.49386\nG1 X50 Y32.6 E0\nG1 X70 Y32.6 E0.49386\nG1 X70 Y32.2 E0\nG1 X50 Y32.2 E0.49386\nG1 X50 Y31.8 E0\nG1 X70 Y31.8 E0.49386\nG1 X70 Y31.4 E0\nG1 X50 Y31.4 E0.49386\nG1 X50 Y31.0 E0\nG1 X70 Y31.0 E0.49386\nG1 X70 Y30.6 E0\nG1 X50 Y30.6 E0.49386\nG1 X50 Y30.2 E0\nG1 X70 Y30.2 E0.49386\nG1 X70 Y29.8 E0\nG1 X50 Y29.8 E0.49386\nG1 X50 Y29.4 E0\nG1 X70 Y29.4 E0.49386\nG1 X70 Y29.0 E0\nG1 X50 Y29.0 E0.49386\nG1 X50 Y28.6 E0\nG1 X70 Y28.6 E0.49386\nG1 X70 Y28.2 E0\nG1 X50 Y28.2 E0.49386\nG1 X50 Y27.8 E0\nG1 X70 Y27.8 E0.49386\nG1 X70 Y27.4 E0\nG1 X50 Y27.4 E0.49386\nG1 X50 Y27.0 E0\nG1 X70 Y27.0 E0.49386\nG1 X70 Y26.6 E0\nG1 X50 Y26.6 E0.49386\nG1 X50 Y26.2 E0\nG1 X70 Y26.2 E0.49386\nG1 X70 Y25.8 E0\nG1 X50 Y25.8 E0.49386\nG1 X50 Y25.4 E0\nG1 X70 Y25.4 E0.49386\nG1 X70 Y25.0 E0\nG1 X50 Y25.0 E0.49386\nG1 X50 Y24.6 E0\nG1 X70 Y24.6 E0.49386\nG1 X70 Y24.2 E0\nG1 X50 Y24.2 E0.49386\nG1 X50 Y23.8 E0\nG1 X70 Y23.8 E0.49386\nG1 X70 Y23.4 E0\nG1 X50 Y23.4 E0.49386\nG1 X50 Y23.0 E0\nG1 X70 Y23.0 E0.49386\nG1 X70 Y22.6 E0\nG1 X50 Y22.6 E0.49386\nG1 X50 Y22.2 E0\nG1 X70 Y22.2 E0.49386\nG1 X70 Y21.8 E0\nG1 X50 Y21.8 E0.49386\nG1 X50 Y21.4 E0\nG1 X70 Y21.4 E0.49386\nG1 X70 Y21.0 E0\nG1 X50 Y21.0 E0.49386\nG1 X50 Y20.6 E0\nG1 X70 Y20.6 E0.49386\nG1 X70 Y20.2 E0\nG1 X50 Y20.2 E0.49386\nG1 X50 Y19.8 E0\nG1 X70 Y19.8 E0.49386\nG1 X70 Y19.4 E0\nG1 X50 Y19.4 E0.49386\nG1 E-0.07500 F2100.00000\nG4\nM107\nM104 S0\nM140 S0\nG1 X10 Y180 F4000\nG1 Z10 F1300.000\nM500\nM0 Happy Printing\nM84"
 
-  #define USER_DESC_3 "Hot maintenance"
-  #define USER_GCODE_3 "M140 S" STRINGIFY(PREHEAT_2_TEMP_BED) "\nM104 S" STRINGIFY(PREHEAT_2_TEMP_HOTEND)
+  #define USER_DESC_5 "Auto Cold Pull"
+  #define USER_GCODE_5 "G28\nM83\nG92 E0.00\nG21\nG1 X125 Y105 Z30\nM109 S250\nG1 E10.00 F6.5\nM109 S95\nM18 E\nM0 Pull your filament out\nM106 S0\nM109 S0"
 
-  #define USER_DESC_4 "Heat Bed/Home/Level"
-  #define USER_GCODE_4 "M140 S" STRINGIFY(PREHEAT_2_TEMP_BED) "\nG28\nG29"
+  #define USER_DESC_6 "Enable Cold Extrusion"
+  #define USER_GCODE_6 "M302 P1"
 
-  #define USER_DESC_5 "Home & Info"
-  #define USER_GCODE_5 "G28\nM503"
+  #define USER_DESC_7 "Disable Cold Extrusion"
+  #define USER_GCODE_7 "M302 P0"
 
-  #define USER_DESC_6 "Print Mesh Validation"
-  #define USER_GCODE_6 "G28\nG29\nG26\nG28"
+  #define USER_DESC_8 "Probe UBL Slot 1" //Use probe to setup UBL.
+  #define USER_GCODE_8 "G28\nG1 X0.00 Y0.00 F3000\nM190 S65\nG29 P1\nG29 P3\nG29 S1\nG29 A\nG29 F 10.0\nM500\nM140 S0\nM0 Mesh Saved in Slot 1"
 
-  #define USER_DESC_7 "Auto Cold Pull"
-  #define USER_GCODE_7 "G28\nM83\nG92 E0.00\nG21\nG1 X125 Y105 Z50\nM109 S250\nG1 E10.00 F6.5\nM109 S95\nM18 E\nM0 Pull your filament out\nM106 S0\nM109 S0"
+  #define USER_DESC_9 "Probe UBL Slot 2" //Use probe to setup UBL.
+  #define USER_GCODE_9 "G28\nG1 X0.00 Y0.00 F3000\nM190 S65\nG29 P1\nG29 P3\nG29 S2\nG29 A\nG29 F 10.0\nM500\nM140 S0\nM0 Mesh Saved in Slot 2"
 
-  #define USER_DESC_8 "Nozzle Change"
-  #define USER_GCODE_8 "M104 S275\nM117 Setting Nozzle to 275C\nG4 s3\nM0 Click to continue"
+  #define USER_DESC_10 "Probe UBL Slot 3" //Use probe to setup UBL.
+  #define USER_GCODE_10 "G28\nG1 X0.00 Y0.00 F3000\nM190 S65\nG29 P1\nG29 P3\nG29 S3\nG29 A\nG29 F 10.0\nM500\nM140 S0\nM0 Mesh Saved in Slot 3"
+
+  #define USER_DESC_11 "Probe UBL Slot 4" //Use probe to setup UBL.
+  #define USER_GCODE_11 "G28\nG1 X0.00 Y0.00 F3000\nM190 S65\nG29 P1\nG29 P3\nG29 S4\nG29 A\nG29 F 10.0\nM500\nM140 S0\nM0 Mesh Saved in Slot 4"
+
+  #define USER_DESC_12 "Probe UBL Slot 5" //Use probe to setup UBL.
+  #define USER_GCODE_12 "G28\nG1 X0.00 Y0.00 F3000\nM190 S65\nG29 P1\nG29 P3\nG29 S5\nG29 A\nG29 F 10.0\nM500\nM140 S0\nM0 Mesh Saved in Slot 5"
+
+  #define USER_DESC_13 "UBL Offset Step 2"
+  #define USER_GCODE_13 "G28\nG1 X125 Y105 Z0.00\nM211 S0\nM0 Set Z Offset"
+
+  #define USER_DESC_14 "UBL Offset Step 3"
+  #define USER_GCODE_14 "M211 S1\nM500"
+
+  #define USER_DESC_15 "Print Mesh Validation"
+  #define USER_GCODE_15 "G28\nG26\nG28"
+
+  #define USER_DESC_16 "Adjust Point Near" //Adjust nearest mesh point
+  #define USER_GCODE_16 "G29 P4\nM500"
+
+  #define USER_DESC_17 "Reset EEPROM"
+  #define USER_GCODE_17 "M502\nM500\nM500\nM117 EEPROM values restored\nG4 S3\nM0 Click to continue"
 #endif
 
 /**
