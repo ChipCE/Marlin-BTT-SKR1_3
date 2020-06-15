@@ -2846,7 +2846,7 @@
  */
 #define CUSTOM_USER_MENUS
 #if ENABLED(CUSTOM_USER_MENUS)
-  #define CUSTOM_USER_MENU_TITLE "Custom Commands"
+  #define CUSTOM_USER_MENU_TITLE "Utilities"
   #define USER_SCRIPT_DONE "M117 User Script Done"
   #define USER_SCRIPT_AUDIBLE_FEEDBACK
   #define USER_SCRIPT_RETURN  // Return to status screen after a script
@@ -2937,6 +2937,18 @@
 
   #define USER_DESC_8 "Nozzle Change"
   #define USER_GCODE_8 "M104 S275\nM117 Setting Nozzle to 275C\nG4 s3\nM0 Click to continue"
+
+  #define USER_DESC_9 "Nozzle Change"
+  #define USER_GCODE_9 "M104 S275\nM117 Setting Nozzle to 275C\nG4 s3\nM0 Click to continue"
+
+  #define USER_DESC_10 "Nozzle Change"
+  #define USER_GCODE_10 "M104 S275\nM117 Setting Nozzle to 275C\nG4 s3\nM0 Click to continue"
+
+  #define USER_DESC_11 "Cold pull PLA"
+  #define USER_GCODE_11 "M104 S275\nM117 Setting Nozzle to 275C\nG4 s3\nM0 Click to continue"
+
+  #define USER_DESC_12 "Cold pull PETG"
+  #define USER_GCODE_12 "M104 S275\nM117 Setting Nozzle to 275C\nG4 s3\nM0 Click to continue"
 #endif
 
 /**

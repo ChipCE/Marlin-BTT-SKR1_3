@@ -1,7 +1,7 @@
 # Marlin 3D Printer Firmware
 
 ## CAUTION
- This firmware is not tested.
+ This firmware is config for custom build machine and not tested.
 
 ## TO-DO
 - Endstop logic flip
