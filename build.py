@@ -13,19 +13,32 @@ PLATFORMIO_PATH = "/usr/bin/platformio"
 WORKING_DIR = os.path.dirname(os.path.realpath(__file__))
 BUILD_TEMP_FILE = [".pio/build",".pio/libdeps"]
 PLATFORMIO_OUTPUT_DIR = ".pio/build/"
+
+# clear old file and cache data before compile
+CLEAN_ON_START = True
+# auto exit when compile is done
+CONFIRM_ON_EXIT = False
+
+# auto append build date
 VERSION_FILE = WORKING_DIR + "/" + MARLIN_PATH + "Version.h"
 VERSION_FILE_BACKUP = VERSION_FILE + ".bak"
-
 STRING_DISTRIBUTION_DATE = "#define STRING_DISTRIBUTION_DATE \"" + datetime.now().strftime("%Y-%m-%d") + "\"\n"
 DETAILED_BUILD_VERSION = "#define DETAILED_BUILD_VERSION SHORT_BUILD_VERSION \" (MagiNeko)\"\n"
 
 print("Marlin 2 firmware cli compiler " + AUTO_COMPILE_VERSION + "\n")
 
+
+
+
+
+
 # try to delete the old files
 try:
     os.remove(WORKING_DIR + "/" + OUTPUT_DIR + "firmware.bin")
-    for tempDir in BUILD_TEMP_FILE:
-        shutil.rmtree(tempDir)
+    if CLEAN_ON_START:
+        os.system("platformio run -t clean")
+        for tempDir in BUILD_TEMP_FILE:
+            shutil.rmtree(tempDir)
 except Exception:
     pass
 
@@ -53,6 +66,7 @@ try:
             versionFile.writelines(lines)
 except Exception as e:
     print(e)
+    print("Error : Version.h not found!")
     exit(1)
 
 
@@ -73,6 +87,9 @@ if proc.returncode == 0:
     print("Done :3")
 else:
     print("Ground control to Major Tom : Your config file is suck, there is some thing wrong.")
-print("Press ENTER to exit.")
-input()
-sys.exit(0)
+
+if CONFIRM_ON_EXIT :
+    print("Press ENTER to exit.")
+    input()
+
+sys.exit(proc.returncode)
