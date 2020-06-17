@@ -680,7 +680,7 @@
   // Define probe X and Y positions for Z1, Z2 [, Z3 [, Z4]]
   // If not defined, probe limits will be used.
   // Override with 'M422 S<index> X<pos> Y<pos>'
-  #define Z_STEPPER_ALIGN_XY { {  17, 105 }, { 233,  105 } }
+  #define Z_STEPPER_ALIGN_XY { {  20, 105 }, { 230,  105 } }
 
   /**
    * Orientation for the automatically-calculated probe positions.
@@ -1555,8 +1555,8 @@
  * the probe to be unable to reach any points.
  */
 #if PROBE_SELECTED && !IS_KINEMATIC
-  #define MIN_PROBE_EDGE_LEFT 17 //MIN_PROBE_EDGE
-  #define MIN_PROBE_EDGE_RIGHT 17 //MIN_PROBE_EDGE
+  #define MIN_PROBE_EDGE_LEFT 20 //MIN_PROBE_EDGE
+  #define MIN_PROBE_EDGE_RIGHT 20 //MIN_PROBE_EDGE
   #define MIN_PROBE_EDGE_FRONT 20 //MIN_PROBE_EDGE
   #define MIN_PROBE_EDGE_BACK 33 //MIN_PROBE_EDGE
 #endif
@@ -1870,26 +1870,26 @@
  */
 #define ADVANCED_PAUSE_FEATURE
 #if ENABLED(ADVANCED_PAUSE_FEATURE)
-  #define PAUSE_PARK_RETRACT_FEEDRATE         40  // (mm/s) Initial retract feedrate.
+  #define PAUSE_PARK_RETRACT_FEEDRATE         60  // (mm/s) Initial retract feedrate.
   #define PAUSE_PARK_RETRACT_LENGTH            2  // (mm) Initial retract.
                                                   // This short retract is done immediately, before parking the nozzle.
   #define FILAMENT_CHANGE_UNLOAD_FEEDRATE     20  // (mm/s) Unload filament feedrate. This can be pretty fast.
   #define FILAMENT_CHANGE_UNLOAD_ACCEL        25  // (mm/s^2) Lower acceleration may allow a faster feedrate.
-  #define FILAMENT_CHANGE_UNLOAD_LENGTH      120  // (mm) The length of filament for a complete unload.
+  #define FILAMENT_CHANGE_UNLOAD_LENGTH       30  // (mm) The length of filament for a complete unload.
                                                   //   For Bowden, the full length of the tube and nozzle.
                                                   //   For direct drive, the full length of the nozzle.
                                                   //   Set to 0 for manual unloading.
   #define FILAMENT_CHANGE_SLOW_LOAD_FEEDRATE   2  // (mm/s) Slow move when starting load.
-  #define FILAMENT_CHANGE_SLOW_LOAD_LENGTH     40 // (mm) Slow length, to allow time to insert material.
+  #define FILAMENT_CHANGE_SLOW_LOAD_LENGTH    20  // (mm) Slow length, to allow time to insert material.
                                                   // 0 to disable start loading and skip to fast load only
   #define FILAMENT_CHANGE_FAST_LOAD_FEEDRATE   6  // (mm/s) Load filament feedrate. This can be pretty fast.
   #define FILAMENT_CHANGE_FAST_LOAD_ACCEL     25  // (mm/s^2) Lower acceleration may allow a faster feedrate.
-  #define FILAMENT_CHANGE_FAST_LOAD_LENGTH     60 // (mm) Load length of filament, from extruder gear to nozzle.
+  #define FILAMENT_CHANGE_FAST_LOAD_LENGTH    60  // (mm) Load length of filament, from extruder gear to nozzle.
                                                   //   For Bowden, the full length of the tube and nozzle.
                                                   //   For direct drive, the full length of the nozzle.
   //#define ADVANCED_PAUSE_CONTINUOUS_PURGE       // Purge continuously up to the purge length until interrupted.
   #define ADVANCED_PAUSE_PURGE_FEEDRATE        3  // (mm/s) Extrude feedrate (after loading). Should be slower than load feedrate.
-  #define ADVANCED_PAUSE_PURGE_LENGTH         60  // (mm) Length to extrude after loading.
+  #define ADVANCED_PAUSE_PURGE_LENGTH         30  // (mm) Length to extrude after loading.
                                                   //   Set to 0 for manual extrusion.
                                                   //   Filament can be extruded repeatedly from the Filament Change menu
                                                   //   until extrusion is consistent, and to purge old filament.
@@ -1897,7 +1897,7 @@
   //#define ADVANCED_PAUSE_FANS_PAUSE             // Turn off print-cooling fans while the machine is paused.
 
                                                   // Filament Unload does a Retract, Delay, and Purge first:
-  #define FILAMENT_UNLOAD_PURGE_RETRACT       5   // (mm) Unload initial retract length.
+  #define FILAMENT_UNLOAD_PURGE_RETRACT        2  // (mm) Unload initial retract length.
   #define FILAMENT_UNLOAD_PURGE_DELAY       5000  // (ms) Delay for the filament to cool after retract.
   #define FILAMENT_UNLOAD_PURGE_LENGTH         8  // (mm) An unretract is done, then this length is purged.
   #define FILAMENT_UNLOAD_PURGE_FEEDRATE      25  // (mm/s) feedrate to purge before unload
@@ -2914,41 +2914,44 @@
   */
 
 
-  #define USER_DESC_1 "Home & UBL Info"
-  #define USER_GCODE_1 "G28\nG29 W"
+  #define USER_DESC_1 "Print Mesh Validation"
+  #define USER_GCODE_1 "G28\nG29\nG26\nG28"
 
-  #define USER_DESC_2 "Cold maintenance"
-  #define USER_GCODE_2 "M140 S" STRINGIFY(PREHEAT_1_TEMP_BED) "\nM104 S" STRINGIFY(PREHEAT_1_TEMP_HOTEND)
+  // #define USER_DESC_2 "Print Mesh Validation"
+  // #define USER_GCODE_2 "G28\nG29\nG26\nG28"
 
-  #define USER_DESC_3 "Hot maintenance"
-  #define USER_GCODE_3 "M140 S" STRINGIFY(PREHEAT_2_TEMP_BED) "\nM104 S" STRINGIFY(PREHEAT_2_TEMP_HOTEND)
+  //#define USER_DESC_2 "Cold maintenance"
+  //#define USER_GCODE_2 "M140 S" STRINGIFY(PREHEAT_1_TEMP_BED) "\nM104 S" STRINGIFY(PREHEAT_1_TEMP_HOTEND)
 
-  #define USER_DESC_4 "Heat Bed/Home/Level"
-  #define USER_GCODE_4 "M140 S" STRINGIFY(PREHEAT_2_TEMP_BED) "\nG28\nG29"
+  //#define USER_DESC_3 "Hot maintenance"
+  //#define USER_GCODE_3 "M140 S" STRINGIFY(PREHEAT_2_TEMP_BED) "\nM104 S" STRINGIFY(PREHEAT_2_TEMP_HOTEND)
 
-  #define USER_DESC_5 "Home & Info"
-  #define USER_GCODE_5 "G28\nM503"
+  //#define USER_DESC_4 "Heat Bed/Home/Level"
+  //#define USER_GCODE_4 "M140 S" STRINGIFY(PREHEAT_2_TEMP_BED) "\nG28\nG29"
 
-  #define USER_DESC_6 "Print Mesh Validation"
-  #define USER_GCODE_6 "G28\nG29\nG26\nG28"
+  //#define USER_DESC_5 "Home & Info"
+  //#define USER_GCODE_5 "G28\nM503"
 
-  #define USER_DESC_7 "Auto Cold Pull"
-  #define USER_GCODE_7 "G28\nM83\nG92 E0.00\nG21\nG1 X125 Y105 Z50\nM109 S250\nG1 E10.00 F6.5\nM109 S95\nM18 E\nM0 Pull your filament out\nM106 S0\nM109 S0"
+  //#define USER_DESC_6 "Print Mesh Validation"
+  //#define USER_GCODE_6 "G28\nG29\nG26\nG28"
 
-  #define USER_DESC_8 "Nozzle Change"
-  #define USER_GCODE_8 "M104 S275\nM117 Setting Nozzle to 275C\nG4 s3\nM0 Click to continue"
+  //#define USER_DESC_7 "Auto Cold Pull"
+  //#define USER_GCODE_7 "G28\nM83\nG92 E0.00\nG21\nG1 X125 Y105 Z50\nM109 S250\nG1 E10.00 F6.5\nM109 S95\nM18 E\nM0 Pull your filament out\nM106 S0\nM109 S0"
 
-  #define USER_DESC_9 "Nozzle Change"
-  #define USER_GCODE_9 "M104 S275\nM117 Setting Nozzle to 275C\nG4 s3\nM0 Click to continue"
+  //#define USER_DESC_8 "Nozzle Change"
+  //#define USER_GCODE_8 "M104 S275\nM117 Setting Nozzle to 275C\nG4 s3\nM0 Click to continue"
 
-  #define USER_DESC_10 "Nozzle Change"
-  #define USER_GCODE_10 "M104 S275\nM117 Setting Nozzle to 275C\nG4 s3\nM0 Click to continue"
+  //#define USER_DESC_9 "Nozzle Change"
+  //#define USER_GCODE_9 "M104 S275\nM117 Setting Nozzle to 275C\nG4 s3\nM0 Click to continue"
 
-  #define USER_DESC_11 "Cold pull PLA"
-  #define USER_GCODE_11 "M104 S275\nM117 Setting Nozzle to 275C\nG4 s3\nM0 Click to continue"
+  //#define USER_DESC_10 "Nozzle Change"
+  //#define USER_GCODE_10 "M104 S275\nM117 Setting Nozzle to 275C\nG4 s3\nM0 Click to continue"
 
-  #define USER_DESC_12 "Cold pull PETG"
-  #define USER_GCODE_12 "M104 S275\nM117 Setting Nozzle to 275C\nG4 s3\nM0 Click to continue"
+  //#define USER_DESC_11 "Cold pull PLA"
+  //#define USER_GCODE_11 "M104 S275\nM117 Setting Nozzle to 275C\nG4 s3\nM0 Click to continue"
+
+  //#define USER_DESC_12 "Cold pull PETG"
+  //#define USER_GCODE_12 "M104 S275\nM117 Setting Nozzle to 275C\nG4 s3\nM0 Click to continue"
 #endif
 
 /**
