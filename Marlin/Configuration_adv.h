@@ -1605,12 +1605,12 @@
     #define PTC_MAX_BED_TEMP BED_MAXTEMP
 
     // Park position to wait for probe cooldown
-    #define PTC_PARK_POS_X 0.0F
-    #define PTC_PARK_POS_Y 0.0F
+    #define PTC_PARK_POS_X -20
+    #define PTC_PARK_POS_Y 0
     #define PTC_PARK_POS_Z 100.0F
 
     // Probe position to probe and wait for probe to reach target temperature
-    #define PTC_PROBE_POS_X  90.0F
+    #define PTC_PROBE_POS_X  250
     #define PTC_PROBE_POS_Y 100.0F
 
     // Enable additional compensation using hotend temperature
@@ -1882,8 +1882,8 @@
   #define FILAMENT_CHANGE_SLOW_LOAD_FEEDRATE   2  // (mm/s) Slow move when starting load.
   #define FILAMENT_CHANGE_SLOW_LOAD_LENGTH    20  // (mm) Slow length, to allow time to insert material.
                                                   // 0 to disable start loading and skip to fast load only
-  #define FILAMENT_CHANGE_FAST_LOAD_FEEDRATE   6  // (mm/s) Load filament feedrate. This can be pretty fast.
-  #define FILAMENT_CHANGE_FAST_LOAD_ACCEL     25  // (mm/s^2) Lower acceleration may allow a faster feedrate.
+  #define FILAMENT_CHANGE_FAST_LOAD_FEEDRATE   4  // (mm/s) Load filament feedrate. This can be pretty fast.
+  #define FILAMENT_CHANGE_FAST_LOAD_ACCEL     20  // (mm/s^2) Lower acceleration may allow a faster feedrate.
   #define FILAMENT_CHANGE_FAST_LOAD_LENGTH    60  // (mm) Load length of filament, from extruder gear to nozzle.
                                                   //   For Bowden, the full length of the tube and nozzle.
                                                   //   For direct drive, the full length of the nozzle.
@@ -2077,7 +2077,7 @@
   #endif
 
   #if AXIS_IS_TMC(Z)
-    #define Z_CURRENT       450
+    #define Z_CURRENT       550
     #define Z_CURRENT_HOME  Z_CURRENT
     #define Z_MICROSTEPS     16
     #define Z_RSENSE          0.11
@@ -2085,7 +2085,7 @@
   #endif
 
   #if AXIS_IS_TMC(Z2)
-    #define Z2_CURRENT      450
+    #define Z2_CURRENT      550
     #define Z2_CURRENT_HOME Z2_CURRENT
     #define Z2_MICROSTEPS    16
     #define Z2_RSENSE         0.11
@@ -2109,7 +2109,7 @@
   #endif
 
   #if AXIS_IS_TMC(E0)
-    #define E0_CURRENT      600
+    #define E0_CURRENT      750
     #define E0_MICROSTEPS    16
     #define E0_RSENSE         0.11
     #define E0_CHAIN_POS     -1
