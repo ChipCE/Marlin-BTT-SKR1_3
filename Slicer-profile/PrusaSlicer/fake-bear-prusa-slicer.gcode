@@ -6,10 +6,12 @@ M83 ; extruder relative mode
 
 M117 Parking extruder
 G28 W ; home all without mesh bed level
-G1 X0 Y100 F2500 ; XY parking
-M400
+M400 ;
 G1 Z50 F1000 ; Z parking
 M400 ;
+G1 X0 Y100 F2500 ; XY parking
+M400 ;
+
 
 ; then preheat
 M104 S[first_layer_temperature] ; set extruder temp
@@ -17,17 +19,19 @@ M140 S[first_layer_bed_temperature] ; set bed temp
 M190 S[first_layer_bed_temperature] ; wait for bed temp
 M109 S[first_layer_temperature] ; wait for extruder temp
 
-M400 ; wait for complete
+M400 ;
 M300 S440 P500 ; play sound
-M0 S30 Clean nozzle then click to continue ; wait for user to clean nozzle
+M117 Wait for clean nozzle
+M0 S30 ; wait for user to clean nozzle
+M400 ;
 
 G28 W ; home all without mesh bed level
 G80 ; mesh bed leveling
 
 G1 Y-3.0 F1000.0 ; go outside print area
 G92 E0.0
-G1 X60.0 E15.0 F1000.0 ; intro line
-G1 X125.0 E21.5 F1000.0 ; intro line
+G1 X60.0 E9.0 F1000.0 ; intro line
+G1 X100.0 E12.5 F1000.0 ; intro line
 G92 E0.0
 M221 S{if layer_height<0.075}100{else}95{endif}
 

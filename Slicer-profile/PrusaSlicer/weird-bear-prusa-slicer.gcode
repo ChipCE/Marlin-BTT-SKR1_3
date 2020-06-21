@@ -18,7 +18,8 @@ M109 S[first_layer_temperature] ; wait for extruder temp
 
 M400 ; wait for complete
 M300 S440 P500 ; play sound
-M0 S30 Clean nozzle then click to continue ; wait for user to clean nozzle
+M117 Wait for clean nozzle ; wait for user to clean nozzle
+M400 ;
 
 G28 ; home
 G29 ; mesh bed leveling
@@ -29,8 +30,9 @@ M400 ;
 G1 Z0.3 F420.0 ; Lower Z
 M400 ;
 G92 E0.0 ; reset extruder distance position
-G1 X60.0 E15.0 F1000.0 ; intro line
-G1 X125.0 E21.5 F1000.0 ; intro line
+G1 X190.0 E9.0 F1000.0 ; intro line
+G1 X150.0 E21.5 F1000.0 ; intro line
+
 M400 ;
 G1 Z2.0 F420 ; lift the extruder a bit
 M400 ;
