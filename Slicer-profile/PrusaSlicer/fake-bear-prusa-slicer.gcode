@@ -21,8 +21,7 @@ M109 S[first_layer_temperature] ; wait for extruder temp
 
 M400 ;
 M300 S440 P500 ; play sound
-M117 Wait for clean nozzle
-M0 S30 ; wait for user to clean nozzle
+M0 S30 Wait for clean nozzle ; wait for user to clean nozzle
 M400 ;
 
 G28 W ; home all without mesh bed level

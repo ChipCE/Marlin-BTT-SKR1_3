@@ -18,7 +18,7 @@ M109 S[first_layer_temperature] ; wait for extruder temp
 
 M400 ; wait for complete
 M300 S440 P500 ; play sound
-M117 Wait for clean nozzle ; wait for user to clean nozzle
+M0 S30 Wait for clean nozzle ; wait for user to clean nozzle
 M400 ;
 
 G28 ; home
