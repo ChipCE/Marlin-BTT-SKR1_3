@@ -1,25 +1,5 @@
 # Marlin 3D Printer Firmware
 
-## CAUTION
- This firmware is config for custom build machine and not tested.
-
-## TO-DO
-- Endstop logic flip
-- Mk3 default PiD
-- Z_AFTER_PROBING -> 0
-- PROBING_STEPPERS_OFF
-- LCD_BED_LEVELING
-- DISABLE_INACTIVE_Z
-- SDCARD_SORT_ALPHA -> no need
-- LIN_ADVANCE_K
-- HYBRID_THRESHOLD
-- CUSTOM_USER_MENUS
-- CANCEL_OBJECTS
-- EMERGENCY_PARSER
-
-## Marlin 3D Printer Firmware
-
-
 ![GitHub](https://img.shields.io/github/license/marlinfirmware/marlin.svg)
 ![GitHub contributors](https://img.shields.io/github/contributors/marlinfirmware/marlin.svg)
 ![GitHub Release Date](https://img.shields.io/github/release-date/marlinfirmware/marlin.svg)
@@ -62,7 +42,6 @@ To build Marlin 2.0 you'll need [Arduino IDE 1.8.8 or newer](https://www.arduino
 ## Submitting Changes
 
 - Submit **Bug Fixes** as Pull Requests to the ([bugfix-2.0.x](https://github.com/MarlinFirmware/Marlin/tree/bugfix-2.0.x)) branch.
-- Submit **New Features** to the ([dev-2.1.x](https://github.com/MarlinFirmware/Marlin/tree/dev-2.1.x)) branch.
 - Follow the [Coding Standards](http://marlinfw.org/docs/development/coding_standards.html) to gain points with the maintainers.
 - Please submit your questions and concerns to the [Issue Queue](https://github.com/MarlinFirmware/Marlin/issues).
 

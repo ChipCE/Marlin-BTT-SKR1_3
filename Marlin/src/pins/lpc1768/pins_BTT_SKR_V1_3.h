@@ -87,14 +87,14 @@
 #endif
 
 //
-// Z Probe (when not Z_MIN_PIN) (Z+)
+// Z Probe (when not Z_MIN_PIN)
 //
 #ifndef Z_MIN_PROBE_PIN
   #define Z_MIN_PROBE_PIN                  P1_24
 #endif
 
 //
-// Filament Runout Sensor (X+)
+// Filament Runout Sensor
 //
 #ifndef FIL_RUNOUT_PIN
   #define FIL_RUNOUT_PIN                   P1_28
