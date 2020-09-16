@@ -9,7 +9,8 @@ MARLIN_PATH = "Marlin/"
 OUTPUT_DIR = "bin/"
 ENVI_NAME = "LPC1768"
 AUTO_COMPILE_VERSION = "v0.2.0"
-PLATFORMIO_PATH = "/home/chip/.local/bin/platformio"
+# PLATFORMIO_PATH = "/home/chip/.local/bin/platformio"
+PLATFORMIO_PATH = "/usr/bin/platformio"
 WORKING_DIR = os.path.dirname(os.path.realpath(__file__))
 BUILD_TEMP_FILE = [".pio/build",".pio/libdeps"]
 PLATFORMIO_OUTPUT_DIR = ".pio/build/"
@@ -72,7 +73,7 @@ except Exception as e:
 
 # Execute platformio build
 # os.system("platformio run -e "+ENVI_NAME)
-proc = subprocess.Popen([PLATFORMIO_PATH + " " + "run -e " + ENVI_NAME], cwd = WORKING_DIR, shell=True)
+proc = subprocess.Popen([PLATFORMIO_PATH + " run -e " + ENVI_NAME], cwd = WORKING_DIR, shell=True)
 
 try:
     proc.communicate()
