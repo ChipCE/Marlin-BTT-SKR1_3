@@ -10,7 +10,7 @@ OUTPUT_DIR = "bin/"
 ENVI_NAME = "LPC1768"
 AUTO_COMPILE_VERSION = "v0.2.0"
 # PLATFORMIO_PATH = "/home/chip/.local/bin/platformio"
-PLATFORMIO_PATH = "~/.local/bin/platformio"
+PLATFORMIO_PATH = "/usr/bin/platformio"
 WORKING_DIR = os.path.dirname(os.path.realpath(__file__))
 BUILD_TEMP_FILE = [".pio/build",".pio/libdeps"]
 PLATFORMIO_OUTPUT_DIR = ".pio/build/"
@@ -27,11 +27,6 @@ STRING_DISTRIBUTION_DATE = "#define STRING_DISTRIBUTION_DATE \"" + datetime.now(
 DETAILED_BUILD_VERSION = "#define DETAILED_BUILD_VERSION SHORT_BUILD_VERSION \" (MagiNeko)\"\n"
 
 print("Marlin 2 firmware cli compiler " + AUTO_COMPILE_VERSION + "\n")
-
-
-
-
-
 
 # try to delete the old files
 try:
