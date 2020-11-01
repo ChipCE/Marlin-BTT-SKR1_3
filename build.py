@@ -9,8 +9,8 @@ MARLIN_PATH = "Marlin/"
 OUTPUT_DIR = "bin/"
 ENVI_NAME = "LPC1768"
 AUTO_COMPILE_VERSION = "v0.2.0"
-# PLATFORMIO_PATH = "/home/chip/.local/bin/platformio"
-PLATFORMIO_PATH = "/usr/bin/platformio"
+PLATFORMIO_PATH = "/home/chip/.local/bin/platformio"
+# PLATFORMIO_PATH = "/usr/bin/platformio"
 WORKING_DIR = os.path.dirname(os.path.realpath(__file__))
 BUILD_TEMP_FILE = [".pio/build",".pio/libdeps"]
 PLATFORMIO_OUTPUT_DIR = ".pio/build/"
@@ -32,7 +32,7 @@ print("Marlin 2 firmware cli compiler " + AUTO_COMPILE_VERSION + "\n")
 try:
     os.remove(WORKING_DIR + "/" + OUTPUT_DIR + "firmware.bin")
     if CLEAN_ON_START:
-        os.system("platformio run -t clean")
+        os.system("platformio run -t clean -e" + ENVI_NAME)
         for tempDir in BUILD_TEMP_FILE:
             shutil.rmtree(tempDir)
 except Exception:
